@@ -132,8 +132,9 @@ def build_rows(trace: dict, readme: dict, registry: dict) -> list[dict]:
             casos_prueba = f"Inspección manual ({req.get('ca')})"
             fecha_prueba = "2026-09-22"
 
-        defectos_rel = [d.get("ID", "") for d in readme["defectos"] if rid in registry.get(d.get("ID", ""), {}).get("artefactos_relacionados", [])] if False else []
-        # (los defectos ya están linkeados por id en el registry; ver hoja Trazabilidad visual)
+        base_notas = req.get("observacion", reg.get("notas", ""))
+        ca_oficial = req.get("ca_texto_oficial")
+        notas = f'CA oficial: "{ca_oficial}" {base_notas}'.strip() if ca_oficial else base_notas
 
         rows.append({
             "id_requisito": rid,
@@ -153,7 +154,7 @@ def build_rows(trace: dict, readme: dict, registry: dict) -> list[dict]:
             "estado_actual": reg.get("estado_final", req.get("estado", "")),
             "rfc_asociada": "RFC-001" if rid in ("RF1", "RF2", "RF3", "RF4", "RF5") else "",
             "ultima_actualizacion": reg.get("fecha_cierre", "—"),
-            "notas": req.get("observacion", reg.get("notas", "")),
+            "notas": notas,
         })
     return rows
 

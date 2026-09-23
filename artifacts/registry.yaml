@@ -44,6 +44,7 @@ artefactos:
     fecha_cierre: "2026-09-22"
     artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001]
     ca: "CA1"
+    ca_texto_oficial: "Dado un paciente con una enfermedad registrada, el sistema muestra las dietas asociadas en un único paso."
     prioridad: "Alta"
     descripcion: "Al seleccionar un paciente, el sistema muestra en una sola pantalla las dietas asociadas a su enfermedad registrada."
 
@@ -55,6 +56,7 @@ artefactos:
     fecha_cierre: "2026-09-22"
     artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001]
     ca: "CA2"
+    ca_texto_oficial: "Si una dieta recomendada incluye un alimento alérgeno/incompatible del paciente, el sistema lo señala de forma inequívoca antes de confirmar."
     prioridad: "Alta"
     descripcion: "El sistema cruza alergias e incompatibilidades del paciente con los alimentos de cada dieta y marca las dietas en conflicto, nombrando el alimento."
 
@@ -66,6 +68,7 @@ artefactos:
     fecha_cierre: "2026-09-22"
     artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001]
     ca: "CA2"
+    ca_texto_oficial: "Si una dieta recomendada incluye un alimento alérgeno/incompatible del paciente, el sistema lo señala de forma inequívoca antes de confirmar."
     prioridad: "Alta"
     descripcion: "El sistema exige confirmación explícita antes de asignar una dieta con alerta."
 
@@ -77,6 +80,7 @@ artefactos:
     fecha_cierre: "2026-09-22"
     artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001]
     ca: "CA3"
+    ca_texto_oficial: "El médico accede a la ficha técnica completa de la dieta sin perder el contexto del paciente."
     prioridad: "Alta"
     descripcion: "El médico abre la ficha técnica completa de la dieta con la cabecera del paciente siempre visible."
 
@@ -88,6 +92,7 @@ artefactos:
     fecha_cierre: "2026-09-22"
     artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001, DEF-05, DEF-06]
     ca: "CA4"
+    ca_texto_oficial: "Un usuario nuevo elige una dieta segura en menos de 90 segundos sin pasar por alto ninguna alerta."
     prioridad: "Media"
     descripcion: "El sistema muestra primero las dietas seguras y guía a un usuario nuevo para decidir en menos de 90 s."
     notas: "4 de 5 pruebas de aceptación cumplieron (80 %). Pendiente repetir con un participante adicional tras corregir DEF-05 y DEF-06."

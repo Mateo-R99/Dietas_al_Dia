@@ -71,12 +71,15 @@ Escala: **Crítico** (impide validar el requisito), **Mayor** (afecta la segurid
 ## 7. Decisión: el requisito queda validado, con reformulación de los criterios
 El prototipo demuestra que la funcionalidad principal (RF1 a RF4) funciona sin errores críticos: en ningún caso se asignó una dieta insegura sin confirmación explícita. CA4 se cumplió en el 80 % de las pruebas (4 de 5); el caso que falló fue por un problema de jerarquía visual (DEF-05), no de seguridad clínica, así que no invalida la épica pero sí exige un ajuste de diseño antes de pasar a desarrollo. Además, los criterios de aceptación originales necesitan mayor precisión:
  
-- **CA1 reformulado:** «Dado un paciente con al menos una enfermedad registrada, al seleccionarlo el sistema muestra en la misma pantalla todas las dietas asociadas, ordenadas con las seguras primero.»
-- **CA2 reformulado:** «Si una dieta contiene un alimento al que el paciente es alérgico o incompatible, el sistema muestra una alerta con el nombre del alimento y exige confirmación explícita antes de asignarla.»
-- **CA3 reformulado:** «La ficha técnica incluye los diez campos del catálogo y se abre sin ocultar los datos del paciente.»
-- **CA4 reformulado:** «Un usuario nuevo, sin capacitación, asigna una dieta segura en menos de 90 s, y ninguna dieta con alerta se asigna sin confirmación.»
+- **CA1 (texto oficial):** «Dado un paciente con una enfermedad registrada, el sistema muestra las dietas asociadas en un único paso.»
+- **CA2 (texto oficial):** «Si una dieta recomendada incluye un alimento alérgeno/incompatible del paciente, el sistema lo señala de forma inequívoca antes de confirmar.»
+- **CA3 (texto oficial):** «El médico accede a la ficha técnica completa de la dieta sin perder el contexto del paciente.»
+- **CA4 (texto oficial):** «Un usuario nuevo elige una dieta segura en menos de 90 segundos sin pasar por alto ninguna alerta.»
 - **Término único:** usar «alérgeno/incompatibilidad» en toda la épica.
 - **Caso faltante:** definir qué ve el médico si ninguna dieta es segura.
+
+> Nota de alineación: el texto anterior es el redactado oficialmente por el profesor (mensaje del 23/09/2026). La primera reformulación que hizo este equipo tras la auditoría IEEE decía lo mismo con otras palabras (p. ej. CA1: «...muestra en la misma pantalla todas las dietas asociadas, ordenadas con las seguras primero»); se reemplaza aquí por el texto oficial para que quede una correspondencia literal, sin cambiar el sentido ni la validación ya hecha.
+
 **Conclusión:** la épica EPC 28 queda **validada de forma condicional**. Se recomienda corregir DEF-05 y DEF-06 (jerarquía visual y guía inicial) y repetir la prueba de CA4 con un participante adicional antes del cierre definitivo del requisito.
 
 ## 8. Herramientas y control de versiones (U4A1 — Trazabilidad de un requisito)
