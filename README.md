@@ -78,3 +78,24 @@ El prototipo demuestra que la funcionalidad principal (RF1 a RF4) funciona sin e
 - **Término único:** usar «alérgeno/incompatibilidad» en toda la épica.
 - **Caso faltante:** definir qué ve el médico si ninguna dieta es segura.
 **Conclusión:** la épica EPC 28 queda **validada de forma condicional**. Se recomienda corregir DEF-05 y DEF-06 (jerarquía visual y guía inicial) y repetir la prueba de CA4 con un participante adicional antes del cierre definitivo del requisito.
+
+## 8. Herramientas y control de versiones (U4A1 — Trazabilidad de un requisito)
+
+Para el cierre formal de la ingeniería de requisitos (Misión 9: *El guardián del conocimiento* y Misión 10: *Auditoría*) este repositorio usa:
+
+- **Control de versiones:** Git/GitHub (este mismo repositorio). Cada artefacto (README, prototipo, registro de metadatos, script, matriz, auditoría) se versiona con commits, así que su historial queda trazable por sí mismo.
+- **Herramienta automatizada de gestión de artefactos:** [`tools/build_matrix.py`](tools/build_matrix.py). Lee el código del prototipo, este README y `artifacts/registry.yaml`, y genera automáticamente la matriz de trazabilidad completa (no se llena a mano). Se ejecuta con:
+
+  ```bash
+  pip install openpyxl pyyaml
+  python tools/build_matrix.py
+  ```
+
+## 9. Metadatos de los artefactos (Misión 9)
+
+Todos los artefactos del proyecto (la épica, cada requisito funcional, el prototipo, los casos de prueba, los defectos, la RFC y los documentos de cierre) están catalogados con sus metadatos mínimos — **ID único, versión, estado final, autor o revisor, fecha de cierre y artefactos relacionados** — en [`artifacts/registry.yaml`](artifacts/registry.yaml). Ese archivo es la fuente que consume `tools/build_matrix.py` para construir la matriz, así que el catálogo y la matriz nunca quedan desincronizados.
+
+## 10. Matriz de trazabilidad y auditoría (Misión 10)
+
+- **Matriz de trazabilidad completa:** [`docs/matriz_trazabilidad_dietas_al_dia.xlsx`](docs/matriz_trazabilidad_dietas_al_dia.xlsx) — generada por `tools/build_matrix.py` a partir del código y los artefactos reales del proyecto (necesidad de negocio → requisito → código → prueba → estado, más registro de RFCs y catálogo de artefactos).
+- **Informe de auditoría end-to-end:** [`AUDITORIA.md`](AUDITORIA.md) — valida la cadena de trazabilidad completa de la épica EPC28, documenta las rupturas encontradas (RF6 y RF7 sin cobertura completa, RF5 verificado con reserva) y las acciones pendientes para el cierre definitivo.

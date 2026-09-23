@@ -1,0 +1,248 @@
+# Catálogo de artefactos — Misión 9: El guardián del conocimiento
+#
+# Fuente única de metadatos del proyecto "Dietas al Día" (épica EPC28).
+# Cada artefacto generado en el proceso de ingeniería de requisitos
+# queda registrado aquí con los 6 metadatos mínimos que exige la
+# rúbrica U4A1 (banda "Excelente"):
+#   id_unico, version, estado_final, autor_revisor, fecha_cierre,
+#   artefactos_relacionados
+#
+# tools/build_matrix.py lee este archivo (además del propio código del
+# prototipo y de README.md) para construir la matriz de trazabilidad
+# de forma automática, así que este registro también hace parte de la
+# "herramienta automatizada de gestión de artefactos" del criterio 2.
+#
+# Convención de estado_final: Verificado | Verificado con reserva |
+# Implementado (parcial) | No implementado | Aprobado | Rechazado |
+# Cerrado
+
+proyecto: "Dietas al Día"
+epica: "EPC28 — Asignación de tratamiento nutricional"
+version_registro: "1.0"
+ultima_actualizacion: "2026-09-23"
+
+artefactos:
+
+  - id: EPC28
+    tipo: "Épica / necesidad de negocio"
+    version: "1.0"
+    estado_final: "Validada condicionalmente"
+    autor_revisor: "Mateo Roldán (analista) · revisor: Oscar Sánchez García (profesor, Ingeniería de Requisitos)"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [RF1, RF2, RF3, RF4, RF5, RF6, RF7, DOC-VALIDACION, PROTO-EPC28, RFC-001]
+    notas: >
+      Stakeholder solicitante: médicos del Departamento de Nutrición.
+      Objetivo: cruzar diagnóstico, catálogo de dietas y alergias del
+      paciente para asignar un tratamiento nutricional seguro sin
+      revisar manualmente la historia clínica.
+
+  - id: RF1
+    tipo: "Requisito funcional"
+    version: "2.0 (reformulado)"
+    estado_final: "Verificado"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001]
+    ca: "CA1"
+    prioridad: "Alta"
+    descripcion: "Al seleccionar un paciente, el sistema muestra en una sola pantalla las dietas asociadas a su enfermedad registrada."
+
+  - id: RF2
+    tipo: "Requisito funcional"
+    version: "2.0 (reformulado)"
+    estado_final: "Verificado"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001]
+    ca: "CA2"
+    prioridad: "Alta"
+    descripcion: "El sistema cruza alergias e incompatibilidades del paciente con los alimentos de cada dieta y marca las dietas en conflicto, nombrando el alimento."
+
+  - id: RF3
+    tipo: "Requisito funcional"
+    version: "1.0"
+    estado_final: "Verificado"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001]
+    ca: "CA2"
+    prioridad: "Alta"
+    descripcion: "El sistema exige confirmación explícita antes de asignar una dieta con alerta."
+
+  - id: RF4
+    tipo: "Requisito funcional"
+    version: "1.0"
+    estado_final: "Verificado"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001]
+    ca: "CA3"
+    prioridad: "Alta"
+    descripcion: "El médico abre la ficha técnica completa de la dieta con la cabecera del paciente siempre visible."
+
+  - id: RF5
+    tipo: "Requisito funcional"
+    version: "2.0 (reformulado)"
+    estado_final: "Verificado con reserva"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [EPC28, PROTO-EPC28, MTX-001, DEF-05, DEF-06]
+    ca: "CA4"
+    prioridad: "Media"
+    descripcion: "El sistema muestra primero las dietas seguras y guía a un usuario nuevo para decidir en menos de 90 s."
+    notas: "4 de 5 pruebas de aceptación cumplieron (80 %). Pendiente repetir con un participante adicional tras corregir DEF-05 y DEF-06."
+
+  - id: RF6
+    tipo: "Requisito funcional"
+    version: "1.0"
+    estado_final: "Implementado (parcial)"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "Pendiente"
+    artefactos_relacionados: [EPC28, PROTO-EPC28]
+    ca: "Épica (soporte)"
+    prioridad: "Media"
+    descripcion: "El sistema registra la dieta asignada en el tratamiento del paciente."
+    notas: "Sin caso de prueba dedicado. Persistencia solo en memoria del navegador (variable S), no hay backend/BD."
+
+  - id: RF7
+    tipo: "Requisito funcional"
+    version: "1.0"
+    estado_final: "No implementado"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "Pendiente"
+    artefactos_relacionados: [EPC28]
+    ca: "Soporte"
+    prioridad: "Baja"
+    descripcion: "El sistema permite buscar pacientes por nombre o número de seguridad social."
+    notas: "Diferido: el prototipo solo listaba 3 pacientes en un <select>. Sin código ni caso de prueba asociados — ruptura de trazabilidad reportada en la auditoría (AUDITORIA.md)."
+
+  - id: PROTO-EPC28
+    tipo: "Prototipo (código)"
+    version: "1.0"
+    estado_final: "Implementado"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [RF1, RF2, RF3, RF4, RF5, RF6, MTX-001]
+    archivo: "dietas-al-dia-prototipo.html"
+    notas: "Prototipo de alta fidelidad, datos simulados. Incluye bloque de trazabilidad embebido (script#trace-data) que build_matrix.py lee para generar la matriz."
+
+  - id: TC-CA4
+    tipo: "Casos de prueba (aceptación con usuarios)"
+    version: "1.0"
+    estado_final: "Ejecutado — 4/5 cumple (80 %)"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [RF5, DEF-05, DEF-06, DOC-VALIDACION]
+    participantes: [P1, P2, P3, P4, P5]
+    descripcion: "Prueba «Asigna una dieta segura a la paciente Laura Pérez», meta CA4 (<90 s, ninguna alerta ignorada). Detalle de cada participante en README.md sección 4."
+
+  - id: DEF-01
+    tipo: "Defecto"
+    version: "1.0"
+    estado_final: "Abierto"
+    autor_revisor: "Analista de requisitos"
+    fecha_cierre: "Pendiente"
+    artefactos_relacionados: [RF1, RF2, PROTO-EPC28]
+    severidad: "Mayor"
+    descripcion: "El catálogo simulado no incluye un paciente sin alergias ni un caso donde ninguna dieta sea segura."
+
+  - id: DEF-02
+    tipo: "Defecto"
+    version: "1.0"
+    estado_final: "Abierto"
+    autor_revisor: "Desarrollo"
+    fecha_cierre: "Pendiente"
+    artefactos_relacionados: [RF2, PROTO-EPC28]
+    severidad: "Mayor"
+    descripcion: "Las alergias dependen de etiquetas simples; un registro en texto libre no se cruzaría bien."
+
+  - id: DEF-03
+    tipo: "Defecto"
+    version: "1.0"
+    estado_final: "Abierto"
+    autor_revisor: "Desarrollo"
+    fecha_cierre: "Pendiente"
+    artefactos_relacionados: [RF6, PROTO-EPC28]
+    severidad: "Menor"
+    descripcion: "La asignación no guarda fecha ni el médico que confirmó la alerta."
+
+  - id: DEF-04
+    tipo: "Defecto"
+    version: "1.0"
+    estado_final: "Abierto"
+    autor_revisor: "Diseño / QA"
+    fecha_cierre: "Pendiente"
+    artefactos_relacionados: [RF4, PROTO-EPC28]
+    severidad: "Menor"
+    descripcion: "La jerarquía visual no se ha probado con lectores de pantalla."
+
+  - id: DEF-05
+    tipo: "Defecto"
+    version: "1.0"
+    estado_final: "Abierto"
+    autor_revisor: "Diseño"
+    fecha_cierre: "Pendiente"
+    artefactos_relacionados: [RF5, TC-CA4]
+    severidad: "Mayor"
+    descripcion: "P4 tardó 97 s porque abrió la ficha técnica antes de comparar las dietas por la etiqueta «segura/con alerta»; la etiqueta debería ser más prominente para un usuario nuevo."
+
+  - id: DEF-06
+    tipo: "Defecto"
+    version: "1.0"
+    estado_final: "Abierto"
+    autor_revisor: "Diseño"
+    fecha_cierre: "Pendiente"
+    artefactos_relacionados: [RF5, TC-CA4]
+    severidad: "Menor"
+    descripcion: "P2 dudó unos segundos sobre dónde iniciar el flujo al no tener un paciente preseleccionado; falta un texto guía en la pantalla inicial."
+
+  - id: RFC-001
+    tipo: "RFC (solicitud de cambio)"
+    version: "1.0"
+    estado_final: "Aprobada"
+    autor_revisor: "Mateo Roldán (analista) · aprobada por: Oscar Sánchez García (profesor / CCB del curso)"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [RF1, RF2, RF3, RF4, RF5, DOC-VALIDACION]
+    descripcion: >
+      Reformulación de los criterios de aceptación CA1-CA4 tras la
+      auditoría IEEE y las pruebas con usuarios (README.md sección 7):
+      se precisan condiciones ambiguas («único paso», «ficha completa»,
+      «sin pasar por alto ninguna alerta») y se unifica el término
+      «alérgeno/incompatibilidad» en toda la épica.
+
+  - id: DOC-VALIDACION
+    tipo: "Informe de validación"
+    version: "1.0"
+    estado_final: "Cerrado"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "2026-09-22"
+    artefactos_relacionados: [EPC28, PROTO-EPC28, TC-CA4, RFC-001]
+    archivo: "README.md"
+
+  - id: MTX-001
+    tipo: "Matriz de trazabilidad"
+    version: "1.0"
+    estado_final: "Generada"
+    autor_revisor: "Mateo Roldán (generada automáticamente por tools/build_matrix.py)"
+    fecha_cierre: "2026-09-23"
+    artefactos_relacionados: [EPC28, RF1, RF2, RF3, RF4, RF5, RF6, RF7, PROTO-EPC28, TC-CA4, AUD-001]
+    archivo: "docs/matriz_trazabilidad_dietas_al_dia.xlsx"
+    notas: "Generada a partir del código del prototipo (script#trace-data), README.md y este registro. No se edita a mano: se regenera con `python tools/build_matrix.py`."
+
+  - id: AUD-001
+    tipo: "Informe de auditoría"
+    version: "1.0"
+    estado_final: "Cerrado"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "2026-09-23"
+    artefactos_relacionados: [EPC28, MTX-001, RF6, RF7]
+    archivo: "AUDITORIA.md"
+
+  - id: REG-001
+    tipo: "Registro de metadatos (este archivo)"
+    version: "1.0"
+    estado_final: "Vigente"
+    autor_revisor: "Mateo Roldán"
+    fecha_cierre: "N/A — se actualiza junto con cada artefacto nuevo"
+    artefactos_relacionados: [MTX-001, AUD-001]
+    archivo: "artifacts/registry.yaml"

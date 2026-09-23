@@ -2,6 +2,29 @@
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dietas al Día – Prototipo EPC28</title>
+<!--
+  Bloque de trazabilidad (Misión 9 / U4A1). No afecta el render: es un
+  <script type="application/json"> que documenta, en el propio código
+  fuente, qué requisito funcional (RF) y criterio de aceptación (CA)
+  implementa cada función del prototipo. tools/build_matrix.py lee este
+  bloque directamente del archivo para generar la matriz de forma
+  automática a partir del código, en vez de mantenerla a mano.
+-->
+<script type="application/json" id="trace-data">
+{
+  "epica": "EPC28",
+  "version_prototipo": "1.0",
+  "requisitos": [
+    {"id":"RF1","ca":"CA1","prioridad":"Alta","funciones":["selP","render"],"elemento":"Lista de dietas del paciente (#list)","estado":"Implementado","descripcion":"Al seleccionar un paciente, el sistema muestra en una sola pantalla las dietas asociadas a su enfermedad registrada."},
+    {"id":"RF2","ca":"CA2","prioridad":"Alta","funciones":["cf","alerts","render"],"elemento":"Etiqueta «CON ALERTA» con alimento resaltado (#list)","estado":"Implementado","descripcion":"Cruza alergias e incompatibilidades del paciente con los alimentos de cada dieta y marca las dietas en conflicto, nombrando el alimento."},
+    {"id":"RF3","ca":"CA2","prioridad":"Alta","funciones":["asignar","okM","closeM"],"elemento":"Ventana de confirmación (#m)","estado":"Implementado","descripcion":"Exige confirmación explícita antes de asignar una dieta con alerta."},
+    {"id":"RF4","ca":"CA3","prioridad":"Alta","funciones":["ver","render"],"elemento":"Ficha técnica (#ficha) con barra de paciente fija (#pbar)","estado":"Implementado","descripcion":"El médico abre la ficha técnica completa de la dieta con la cabecera del paciente siempre visible."},
+    {"id":"RF5","ca":"CA4","prioridad":"Media","funciones":["render","startT","fin","renderT"],"elemento":"Orden por seguridad + prueba cronometrada (#tb, #tlog)","estado":"Implementado","descripcion":"Muestra primero las dietas seguras y guía a un usuario nuevo para decidir en menos de 90 s."},
+    {"id":"RF6","ca":"Épica","prioridad":"Media","funciones":["fin"],"elemento":"Estado en memoria S.asg (#asg)","estado":"Implementado (parcial)","descripcion":"Registra la dieta asignada en el tratamiento del paciente.","observacion":"Persistencia solo en memoria de sesión (variable S del navegador); no hay backend ni base de datos, se pierde al recargar."},
+    {"id":"RF7","ca":"Soporte","prioridad":"Baja","funciones":[],"elemento":null,"estado":"No implementado","descripcion":"El sistema permite buscar pacientes por nombre o número de seguridad social.","observacion":"El prototipo solo ofrece un <select> con 3 pacientes precargados; no existe campo de búsqueda por nombre ni por número de seguridad social."}
+  ]
+}
+</script>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f4f6f8;--card:#fff;--tx:#1c2733;--mut:#5b6b7a;--bd:#d0d7de;--pri:#0b5cab;--ok:#1a7f37;--okbg:#e6f4ea;--bad:#b42318;--badbg:#fdeceb;--warn:#8a5a00;--warnbg:#fff4d6}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12181f;--card:#1b232c;--tx:#e6ebf0;--mut:#9aa9b8;--bd:#33414f;--pri:#5aa2ee;--ok:#5fd07f;--okbg:#17321f;--bad:#ff8b80;--badbg:#3a1a18;--warn:#f0c060;--warnbg:#3a2f12}}
