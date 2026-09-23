@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dietas al Día – Prototipo EPC28</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f4f6f8;--card:#fff;--tx:#1c2733;--mut:#5b6b7a;--bd:#d0d7de;--pri:#0b5cab;--ok:#1a7f37;--okbg:#e6f4ea;--bad:#b42318;--badbg:#fdeceb;--warn:#8a5a00;--warnbg:#fff4d6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12181f;--card:#1b232c;--tx:#e6ebf0;--mut:#9aa9b8;--bd:#33414f;--pri:#5aa2ee;--ok:#5fd07f;--okbg:#17321f;--bad:#ff8b80;--badbg:#3a1a18;--warn:#f0c060;--warnbg:#3a2f12}}
+:root[data-theme="dark"]{--bg:#12181f;--card:#1b232c;--tx:#e6ebf0;--mut:#9aa9b8;--bd:#33414f;--pri:#5aa2ee;--ok:#5fd07f;--okbg:#17321f;--bad:#ff8b80;--badbg:#3a1a18;--warn:#f0c060;--warnbg:#3a2f12}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+header{background:var(--pri);color:#fff;padding:12px 16px}header h1{margin:0;font-size:18px}header small{opacity:.9}
+#pbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:2px solid var(--pri);padding:10px 16px}
+.ctx{margin-top:8px;font-size:14px;line-height:1.9}
+main{max-width:1100px;margin:0 auto;padding:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+h2{font-size:16px;margin:0 0 10px}h3{font-size:15px;margin:0}
+.card,.box{background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:12px;margin-bottom:12px}
+.card.bad{border-left:5px solid var(--bad)}.card.ok{border-left:5px solid var(--ok)}
+.row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.m{color:var(--mut);font-size:13px;margin:4px 0}
+.tag{font-size:12px;font-weight:700;padding:2px 8px;border-radius:10px}.tag.ok{background:var(--okbg);color:var(--ok)}.tag.bad{background:var(--badbg);color:var(--bad)}
+.chip{display:inline-block;font:inherit;font-size:12px;padding:2px 8px;margin:2px 3px 2px 0;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}
+.chip.bad{background:var(--badbg);color:var(--bad);border-color:var(--bad);font-weight:700}.chip.warn{background:var(--warnbg);color:var(--warn);border-color:var(--warn)}
+button.chip{cursor:pointer}button.chip.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+.alert{background:var(--badbg);color:var(--bad);border:1px solid var(--bad);border-radius:4px;padding:6px 8px;margin:8px 0;font-size:13px;font-weight:600}
+button.b{font:inherit;font-size:14px;padding:6px 12px;border-radius:4px;border:1px solid var(--pri);background:var(--card);color:var(--pri);cursor:pointer;margin:8px 8px 0 0}
+button.b.p{background:var(--pri);color:#fff}button.b:disabled{opacity:.4;cursor:not-allowed}
+select,input[type=text]{font:inherit;padding:5px;border:1px solid var(--bd);border-radius:4px;background:var(--card);color:var(--tx)}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{border:1px solid var(--bd);padding:5px 8px;text-align:left;vertical-align:top}th{background:var(--bg);width:34%}
+.wrap{overflow-x:auto}.empty{color:var(--mut);padding:16px;border:1px dashed var(--bd);border-radius:6px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9;padding:16px}.ov[hidden]{display:none}
+.dlg{background:var(--card);border:2px solid var(--bad);border-radius:8px;padding:16px;max-width:440px}
+#tb{background:var(--warnbg);color:var(--warn);border:1px solid var(--warn);border-radius:6px;padding:8px 12px;margin-bottom:12px;font-weight:600}
+</style></head><body>
+<header><h1>Dietas al Día · Departamento de Nutrición</h1><small>Prototipo de alta fidelidad – EPC 28: Asignación de tratamiento nutricional (datos simulados)</small></header>
+<div id="pbar"></div>
+<main>
+<div id="tb" hidden></div>
+<div class="grid"><section><div id="list"></div><div id="asg"></div></section><section id="ficha"></section></div>
+
+<div class="box"><h2>Prueba de aceptación con usuario nuevo (CA4)</h2>
+<p class="m">Tarea: «Asigna una dieta segura a la paciente Laura Pérez». Meta: menos de 90 s y ninguna alerta ignorada.</p>
+<label>Participante <input type="text" id="who" placeholder="Nombre o código"></label>
+<button class="b p" onclick="startT()">Iniciar prueba</button>
+<div class="wrap"><table id="tlog" style="margin-top:10px"></table></div></div>
+
+<details class="box"><summary><b>Objetivo del prototipo y requisitos de mayor prioridad</b></summary>
+<p><b>Objetivo:</b> validar con médicos de Nutrición que el cruce automático entre diagnóstico, catálogo de dietas y alergias permite elegir un tratamiento seguro sin revisar la historia clínica manualmente.</p>
+<ul><li><b>RF1 (CA1):</b> al elegir paciente se listan, en un solo paso, las dietas asociadas a su enfermedad.</li>
+<li><b>RF2 (CA2):</b> se marcan las dietas con alimentos alérgenos o incompatibles, nombrando el alimento.</li>
+<li><b>RF3 (CA2):</b> confirmación explícita antes de asignar una dieta con alerta.</li>
+<li><b>RF4 (CA3):</b> ficha técnica completa con el contexto del paciente siempre visible.</li>
+<li><b>RF5 (CA4):</b> dietas seguras primero y flujo guiado para decidir en menos de 90 s.</li></ul>
+<p class="m"><b>Diseño técnico:</b> entidades Paciente, Enfermedad, Dieta y Alimento; cada alimento lleva su alérgeno etiquetado y el cruce compara ese alérgeno con las alergias e incompatibilidades del paciente.</p></details>
+</main>
+
+<div class="ov" id="m" hidden><div class="dlg" role="alertdialog"><h2 style="color:var(--bad)">⚠ Alerta de seguridad</h2><div id="mt"></div>
+<label style="display:block;margin-top:10px"><input type="checkbox" id="ck" onchange="$('mo').disabled=!this.checked"> He revisado la alerta y asumo la decisión clínica.</label>
+<button class="b" onclick="closeM()">Cancelar</button><button class="b p" id="mo" disabled onclick="okM()">Confirmar asignación</button></div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const FD={avena:['Avena','gluten'],yogur:['Yogur natural','lactosa'],almendras:['Almendras','frutos secos'],pollo:['Pollo',''],brocoli:['Brócoli',''],aceite:['Aceite de oliva',''],pescado:['Pescado azul',''],nueces:['Nueces','frutos secos'],legumbres:['Legumbres',''],verduras:['Verduras',''],huevo:['Huevo','huevo'],aguacate:['Aguacate',''],queso:['Queso fresco','lactosa'],lacteos:['Lácteos bajos en grasa','lactosa'],frutas:['Frutas',''],camaron:['Camarones','mariscos'],pan:['Pan integral','gluten'],arroz:['Arroz integral',''],ensalada:['Ensalada',''],higado:['Hígado de res',''],lentejas:['Lentejas',''],espinaca:['Espinaca',''],naranja:['Jugo de naranja',''],semillas:['Semillas de calabaza',''],tofu:['Tofu','soya']};
+const P=[{id:1,n:'María Restrepo',e:54,w:78,h:1.62,enf:['Diabetes mellitus tipo 2'],al:['frutos secos'],inc:[]},
+{id:2,n:'Carlos Gómez',e:41,w:92,h:1.75,enf:['Obesidad','Hipertensión arterial'],al:['mariscos'],inc:['gluten']},
+{id:3,n:'Laura Pérez',e:29,w:55,h:1.60,enf:['Anemia ferropénica'],al:['huevo'],inc:[]}];
+const D=[
+{id:1,n:'Control glucémico',z:['Diabetes mellitus tipo 2'],f:['avena','yogur','almendras','pollo','brocoli'],k:1600,o:'Mantener glucemia estable y reducir HbA1c',df:'Carbohidratos complejos de índice glucémico bajo',ing:'5 comidas/día',dur:'12 semanas',dos:'45 % carbohidratos, 25 % proteína',pa:'Medir glucemia antes de cada comida',su:'Ninguno'},
+{id:2,n:'Mediterránea',z:['Diabetes mellitus tipo 2','Hipertensión arterial'],f:['aceite','pescado','nueces','legumbres','verduras'],k:1800,o:'Mejorar el perfil cardiometabólico',df:'Patrón rico en grasas insaturadas y fibra',ing:'4 comidas/día',dur:'16 semanas',dos:'35 % grasas insaturadas',pa:'Pescado 3 veces por semana',su:'Omega-3 si no consume pescado'},
+{id:3,n:'Baja en carbohidratos',z:['Diabetes mellitus tipo 2','Obesidad'],f:['huevo','pollo','aguacate','brocoli','queso'],k:1500,o:'Reducir peso y glucemia',df:'Restricción moderada de carbohidratos con proteína magra',ing:'4 comidas/día',dur:'8 semanas',dos:'Menos de 100 g de carbohidratos/día',pa:'Pesaje semanal',su:'Multivitamínico'},
+{id:4,n:'DASH',z:['Hipertensión arterial'],f:['avena','lacteos','frutas','pescado','legumbres'],k:2000,o:'Reducir la presión arterial',df:'Baja en sodio, rica en potasio y calcio',ing:'5 raciones de fruta y verdura/día',dur:'12 semanas',dos:'Sodio menor a 2 300 mg/día',pa:'Medir presión arterial a diario',su:'Ninguno'},
+{id:5,n:'Hipocalórica equilibrada',z:['Obesidad'],f:['camaron','pan','arroz','ensalada','pollo'],k:1400,o:'Pérdida de peso gradual',df:'Déficit calórico de 500 kcal/día',ing:'4 comidas/día',dur:'12 semanas',dos:'Déficit de 500 kcal',pa:'Actividad física 150 min/semana',su:'Multivitamínico'},
+{id:6,n:'Rica en hierro',z:['Anemia ferropénica'],f:['higado','lentejas','espinaca','huevo','naranja'],k:2100,o:'Recuperar reservas de hierro',df:'Hierro hemo y no hemo con vitamina C',ing:'5 comidas/día',dur:'12 semanas',dos:'18 mg de hierro/día',pa:'Hemograma a las 6 semanas',su:'Hierro oral'},
+{id:7,n:'Vegetariana rica en hierro',z:['Anemia ferropénica'],f:['lentejas','espinaca','semillas','tofu','naranja'],k:1900,o:'Recuperar hierro sin carnes',df:'Hierro no hemo con vitamina C',ing:'5 comidas/día',dur:'12 semanas',dos:'27 mg de hierro/día',pa:'Hemograma a las 6 semanas',su:'Hierro y B12'}];
+let S={pid:null,dz:null,sel:null,asg:{},test:null,log:[],pend:null,iv:null};
+const pat=()=>P.find(p=>p.id===S.pid);
+const cf=(d,p)=>d.f.filter(k=>FD[k][1]&&(p.al.includes(FD[k][1])||p.inc.includes(FD[k][1]))).map(k=>({k,n:FD[k][0],t:FD[k][1],y:p.al.includes(FD[k][1])?'alergia':'incompatibilidad'}));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const chips=(a,c)=>a.length?a.map(x=>`<span class="chip ${c}">${x}</span>`).join(''):'<span class="m">ninguna</span>';
+const alerts=c=>c.map(x=>`<div class="alert" role="alert">⚠ Contiene ${x.n} (${x.y}: ${x.t})</div>`).join('');
+function selP(v){S.pid=v?+v:null;const p=pat();S.dz=p?p.enf[0]:null;S.sel=null;render()}
+function selD(e){S.dz=e;S.sel=null;render()}
+function ver(id){S.sel=id;render()}
+function render(){
+ const p=pat();
+ $('pbar').innerHTML=`<label><b>Paciente</b> <select onchange="selP(this.value)"><option value="">— Selecciona un paciente —</option>${P.map(x=>`<option value="${x.id}"${p&&p.id===x.id?' selected':''}>${x.n}</option>`).join('')}</select></label>`+(p?`<div class="ctx"><b>${p.n}</b> · ${p.e} años · ${p.w} kg · ${p.h} m<br>Alergias: ${chips(p.al,'bad')} Incompatibilidades: ${chips(p.inc,'warn')}<br>Enfermedades: ${p.enf.map(e=>`<button class="chip${e===S.dz?' on':''}" onclick="selD('${e}')">${e}</button>`).join('')}</div>`:'');
+ let h='';
+ if(!p)h='<p class="empty">Selecciona un paciente para ver las dietas asociadas a su diagnóstico.</p>';
+ else{h=`<h2>Dietas para: ${S.dz}</h2>`+D.filter(d=>d.z.includes(S.dz)).map(d=>({d,c:cf(d,p)})).sort((a,b)=>a.c.length-b.c.length).map(({d,c})=>`<article class="card ${c.length?'bad':'ok'}"><div class="row"><h3>${d.n}</h3><span class="tag ${c.length?'bad':'ok'}">${c.length?'⚠ CON ALERTA':'✓ SEGURA'}</span></div><p class="m">${d.k} kcal · ${d.o}</p><div>${d.f.map(k=>`<span class="chip${c.some(x=>x.k===k)?' bad':''}">${FD[k][0]}</span>`).join('')}</div>${alerts(c)}<button class="b" onclick="ver(${d.id})">Ver ficha técnica</button><button class="b p" onclick="asignar(${d.id})">Asignar dieta</button></article>`).join('')}
+ $('list').innerHTML=h;
+ const d=D.find(x=>x.id===S.sel);
+ if(d&&p){const c=cf(d,p);$('ficha').innerHTML=`<div class="box"><div class="row"><h2>Ficha técnica: ${d.n}</h2><span class="tag ${c.length?'bad':'ok'}">${c.length?'⚠ CON ALERTA':'✓ SEGURA'}</span></div>${alerts(c)}<div class="wrap"><table>${[['Objetivo / indicaciones',d.o],['Definición técnica',d.df],['Aporte calórico',d.k+' kcal/día'],['Componentes básicos',d.f.map(k=>FD[k][0]).join(', ')],['Ingesta necesaria',d.ing],['Vía de administración','Oral'],['Duración',d.dur],['Dosificación',d.dos],['Pauta',d.pa],['Suplementos',d.su]].map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')}</table></div><button class="b p" onclick="asignar(${d.id})">Asignar dieta</button></div>`}
+ else $('ficha').innerHTML='<p class="empty">Elige «Ver ficha técnica» en una dieta. El contexto del paciente permanece visible arriba.</p>';
+ const a=p&&S.asg[p.id];
+ $('asg').innerHTML=a?`<div class="box" style="border-color:var(--ok)"><h2>Tratamiento asignado</h2><b>${D.find(x=>x.id===a.d).n}</b>${a.al?' <span class="tag bad">asignada con alerta confirmada</span>':' <span class="tag ok">sin alertas</span>'}</div>`:'';
+}
+function asignar(id){const p=pat(),d=D.find(x=>x.id===id),c=cf(d,p);
+ if(c.length){S.pend=id;$('mt').innerHTML=`<p>La dieta <b>${d.n}</b> no es segura para ${p.n}:</p>${alerts(c)}`;$('ck').checked=false;$('mo').disabled=true;$('m').hidden=false}
+ else fin(id,false)}
+function closeM(){$('m').hidden=true;S.pend=null}
+function okM(){const id=S.pend;closeM();fin(id,true)}
+function fin(id,al){const p=pat();S.asg[p.id]={d:id,al};
+ if(S.test){const s=(Date.now()-S.test.t0)/1000,ok=p.id===3&&!al&&s<=90;clearInterval(S.iv);
+  S.log.push({w:S.test.w,s:s.toFixed(1),d:D.find(x=>x.id===id).n,al,ok,p:p.id===3});S.test=null;$('tb').hidden=true;renderT()}
+ render()}
+function startT(){S.test={t0:Date.now(),w:$('who').value.trim()||'Anónimo'};S.pid=null;S.sel=null;S.dz=null;render();
+ const b=$('tb');b.hidden=false;clearInterval(S.iv);
+ const tk=()=>{b.textContent='Prueba en curso · Tarea: asigna una dieta segura a Laura Pérez · Tiempo: '+((Date.now()-S.test.t0)/1000).toFixed(0)+' s'};tk();S.iv=setInterval(tk,500)}
+function renderT(){$('tlog').innerHTML=S.log.length?'<tr><th>Participante</th><th>Tiempo (s)</th><th>Dieta elegida</th><th>Alerta ignorada</th><th>Resultado CA4</th></tr>'+S.log.map(r=>`<tr><td>${esc(r.w)}</td><td>${r.s}</td><td>${r.d}</td><td>${r.al?'Sí':'No'}</td><td>${r.ok?'Cumple':'No cumple'+(!r.p?' (paciente incorrecto)':r.al?' (alerta ignorada)':' (más de 90 s)')}</td></tr>`).join(''):''}
+render();
+</script></body></html>
